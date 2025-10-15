@@ -8,11 +8,32 @@
 import SwiftUI
 
 struct SearchBarView: View {
+    @Binding var cityName : String
+    let onSearch : () -> Void
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack{
+        TextField("Search", text: $cityName)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .textInputAutocapitalization(.words)
+                .onSubmit {
+                    onSearch()
+                }
+            
+            Button(action:onSearch) {
+                Image(systemName: "magnifyingglass")
+                    .foregroundStyle(Color.white)
+                    .padding()
+                    .background(Color.blue.opacity(0.7))
+                    .clipShape(Circle())
+            }
+            
+        }
+        .padding()
     }
 }
 
 #Preview {
-    SearchBarView()
+    SearchBarView(cityName: .constant("İstanbul")) {
+        print("Tıklandı")
+    }
 }
